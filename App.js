@@ -1,20 +1,35 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as React from "react";
+import { StyleSheet, View, Text, Button, Pressable } from "react-native";
+import { WebView } from "react-native-webview";
+import * as Haptics from "expo-haptics";
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
+	const webViewRef = React.useRef(null);
+
+	const handleGuessEntered = () => {
+		// Trigger haptic feedback when the user enters a guess
+		Haptics.selectionAsync();
+	};
+
+	return (
+		<View style={styles.container}>
+			<WebView
+				ref={webViewRef}
+				javaScriptEnabled={true}
+				domStorageEnabled={true}
+				showsVerticalScrollIndicator={false}
+				showsHorizontalScrollIndicator={false}
+				// injectedJavaScript={injectedJavaScript}
+				source={{ uri: "https://meld.goldin.io/" }}
+			/>
+		</View>
+	);
 }
 
 const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
+	container: {
+		flex: 1,
+		justifyContent: "center",
+		paddingHorizontal: 0,
+	},
 });
